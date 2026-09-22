@@ -20,12 +20,11 @@ MVP acadêmico do **Sistema de Uberização para Serviços de Construção Civil
 4. Publicação de demanda de serviço com localidade e descrição.
 5. Listagem e visualização de demandas.
 6. Aceite da demanda por profissional validado.
-7. Cálculo automático do total do pedido.
-8. Pagamento modelado com Strategy/Factory (`PIX` ou `CARTAO`) para fins acadêmicos.
-9. Cancelamento e finalização de pedido.
-10. Avaliação do serviço com nota de 1 a 5.
+7. Finalização do serviço aceito.
+8. Avaliação do serviço com nota de 1 a 5.
+9. Moderação e validação de cadastros.
 
-> O processamento financeiro real continua fora do escopo do MVP. As classes de pagamento implementam apenas validação acadêmica do modelo definido no projeto.
+> Pagamentos, orçamento, agendamento e histórico analítico permanecem fora do escopo do MVP. O acerto financeiro ocorre diretamente entre as partes.
 
 ## Arquitetura
 
@@ -40,8 +39,6 @@ controller -> service -> domain/repository -> MySQL
 Padrões utilizados:
 
 - **Repository:** Spring Data JPA abstrai o acesso a dados.
-- **Strategy:** subclasses `PagamentoPix` e `PagamentoCartao` encapsulam validações distintas.
-- **Factory Method (fábrica simples):** `PagamentoFactory` centraliza a criação das estratégias de pagamento.
 
 ## Organização do repositório
 
