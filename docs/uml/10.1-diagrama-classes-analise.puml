@@ -1,0 +1,50 @@
+@startuml
+title Diagrama de Classes de Análise — CONSTRUMOB
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+
+abstract class Usuario {
+  nome
+  email
+  telefone
+  statusCadastro
+}
+class Cliente
+class Profissional {
+  especialidade
+  statusValidacao
+}
+class Administrador
+class "Categoria de Serviço" as CategoriaServico {
+  nome
+  descricao
+}
+class Demanda {
+  descricao
+  localidade
+  dataPublicacao
+  status
+}
+class "Aceite / Atendimento" as Atendimento {
+  dataAceite
+  dataFinalizacao
+  status
+}
+class Avaliacao {
+  nota
+  comentario
+  data
+}
+
+Usuario <|-- Cliente
+Usuario <|-- Profissional
+Usuario <|-- Administrador
+Cliente "1" -- "0..*" Demanda : publica
+CategoriaServico "1" -- "0..*" Demanda : classifica
+Demanda "1" -- "0..1" Atendimento : gera
+Profissional "1" -- "0..*" Atendimento : executa
+Cliente "1" -- "0..*" Avaliacao : registra
+Profissional "1" -- "0..*" Avaliacao : recebe
+Atendimento "1" -- "0..1" Avaliacao : resulta em
+Administrador "1" -- "0..*" Usuario : modera
+@enduml

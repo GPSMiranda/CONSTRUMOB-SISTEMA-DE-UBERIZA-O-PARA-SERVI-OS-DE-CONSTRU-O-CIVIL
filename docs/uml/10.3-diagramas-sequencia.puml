@@ -1,0 +1,105 @@
+@startuml
+title DS-01 — Cadastrar-se / Autenticar-se
+actor Usuario
+boundary "Tela de acesso" as Tela
+control "Serviço de autenticação" as Auth
+database "Cadastro de usuários" as DB
+Usuario -> Tela : informa dados
+Tela -> Auth : solicitar cadastro/login
+Auth -> DB : consultar e persistir usuário
+DB --> Auth : resultado
+alt dados válidos
+  Auth --> Tela : sessão autenticada
+  Tela --> Usuario : exibir acesso à plataforma
+else dados inválidos ou e-mail duplicado
+  Auth --> Tela : mensagem de validação
+  Tela --> Usuario : solicitar correção
+end
+@enduml
+
+@startuml
+title DS-02 — Publicar Demanda
+actor Cliente
+boundary "Tela de publicação" as Tela
+control "Gestão de demandas" as Gestao
+database "Demandas" as DB
+Cliente -> Tela : informa categoria, descrição e localidade
+Tela -> Gestao : publicar demanda
+Gestao -> DB : validar e salvar status ABERTO
+DB --> Gestao : demanda persistida
+Gestao --> Tela : confirmação e identificador
+Tela --> Cliente : exibir demanda publicada
+@enduml
+
+@startuml
+title DS-03 — Consultar Demandas
+actor Profissional
+boundary "Mural de demandas" as Tela
+control "Consulta de demandas" as Consulta
+database "Demandas" as DB
+Profissional -> Tela : acessa mural
+Tela -> Consulta : solicitar demandas ABERTAS
+Consulta -> DB : consultar por status
+DB --> Consulta : lista de demandas
+Consulta --> Tela : dados do mural
+Tela --> Profissional : exibir demandas e detalhes
+@enduml
+
+@startuml
+title DS-04 — Aceitar Demanda
+actor "Profissional validado" as Prof
+boundary "Detalhe da demanda" as Tela
+control "Gestão de atendimento" as Atendimento
+database "Demanda e atendimento" as DB
+Prof -> Tela : confirma Aceitar
+Tela -> Atendimento : solicitar aceite
+Atendimento -> Atendimento : verificar cadastro e status ABERTO
+Atendimento -> DB : associar profissional e mudar para ACEITO
+DB --> Atendimento : atendimento registrado
+Atendimento --> Tela : confirmação
+Tela --> Prof : exibir atendimento ACEITO
+@enduml
+
+@startuml
+title DS-05 — Finalizar Serviço
+actor "Profissional associado" as Prof
+boundary "Detalhe do atendimento" as Tela
+control "Gestão de atendimento" as Atendimento
+database "Demanda e atendimento" as DB
+Prof -> Tela : confirma finalização
+Tela -> Atendimento : solicitar finalização
+Atendimento -> Atendimento : verificar profissional e status ACEITO
+Atendimento -> DB : mudar status para FINALIZADO
+DB --> Atendimento : alteração persistida
+Atendimento --> Tela : confirmação
+Tela --> Prof : informar serviço finalizado
+@enduml
+
+@startuml
+title DS-06 — Avaliar Profissional
+actor Cliente
+boundary "Tela de avaliação" as Tela
+control "Gestão de avaliações" as Avaliacao
+database "Avaliações" as DB
+Cliente -> Tela : informa nota e comentário
+Tela -> Avaliacao : registrar avaliação
+Avaliacao -> Avaliacao : verificar cliente, finalização e nota 1..5
+Avaliacao -> DB : persistir avaliação
+DB --> Avaliacao : avaliação registrada
+Avaliacao --> Tela : confirmação
+Tela --> Cliente : exibir sucesso
+@enduml
+
+@startuml
+title DS-07 — Moderar Cadastro
+actor Administrador
+boundary "Painel de moderação" as Tela
+control "Gestão de moderação" as Moderacao
+database "Usuários" as DB
+Administrador -> Tela : seleciona usuário e ação
+Tela -> Moderacao : validar/bloquear/ativar cadastro
+Moderacao -> DB : atualizar statusCadastro
+DB --> Moderacao : status persistido
+Moderacao --> Tela : confirmação
+Tela --> Administrador : exibir resultado
+@enduml
