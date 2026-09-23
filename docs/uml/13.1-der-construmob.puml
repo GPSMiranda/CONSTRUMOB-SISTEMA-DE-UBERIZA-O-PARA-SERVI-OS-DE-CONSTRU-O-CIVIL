@@ -1,18 +1,60 @@
 @startuml
-title DER — CONSTRUMOB MVP
-hide methods
-hide stereotypes
-entity CLIENTE { * id : BIGINT <<PK>>; --; nome : VARCHAR(120); email : VARCHAR(160) <<UQ>>; telefone : VARCHAR(30) }
-entity PROFISSIONAL { * id : BIGINT <<PK>>; --; nome : VARCHAR(120); email : VARCHAR(160) <<UQ>>; especialidade : VARCHAR(120); validado : BOOLEAN }
-entity SERVICO { * id : BIGINT <<PK>>; --; nome : VARCHAR(120); descricao : VARCHAR(255); preco_base : DECIMAL(12,2) }
-entity PEDIDO_SERVICO { * id : BIGINT <<PK>>; --; cliente_id : BIGINT <<FK>>; profissional_id : BIGINT <<FK>>; servico_id : BIGINT <<FK>>; descricao : TEXT; localidade : VARCHAR(180); status : VARCHAR(30); data_criacao : DATETIME }
-entity ITEM_SERVICO { * id : BIGINT <<PK>>; --; pedido_id : BIGINT <<FK>>; servico_id : BIGINT <<FK>>; quantidade : INT; preco_unitario : DECIMAL(12,2) }
-entity AVALIACAO { * id : BIGINT <<PK>>; --; pedido_id : BIGINT <<FK>>; profissional_id : BIGINT <<FK>>; nota : INT [1..5]; comentario : VARCHAR(500); data_criacao : DATETIME }
+title DER - CONSTRUMOB MVP
+
+entity CLIENTE {
+  id : BIGINT PK
+  nome : VARCHAR(120)
+  email : VARCHAR(160) UNIQUE
+  telefone : VARCHAR(20)
+}
+
+entity PROFISSIONAL {
+  id : BIGINT PK
+  nome : VARCHAR(120)
+  email : VARCHAR(160) UNIQUE
+  telefone : VARCHAR(20)
+  especialidade : VARCHAR(100)
+  validado : BOOLEAN
+}
+
+entity SERVICO {
+  codigo : BIGINT PK
+  nome : VARCHAR(120)
+  categoria : VARCHAR(80)
+  preco : DECIMAL(12,2)
+  ativo : BOOLEAN
+}
+
+entity PEDIDO_SERVICO {
+  numero : BIGINT PK
+  data : DATETIME
+  status : VARCHAR(20)
+  cliente_id : BIGINT FK
+  profissional_id : BIGINT FK NULL
+  localidade : VARCHAR(160)
+  descricao : VARCHAR(500)
+}
+
+entity ITEM_SERVICO {
+  id : BIGINT PK
+  pedido_id : BIGINT FK
+  servico_id : BIGINT FK
+  quantidade : INT
+  preco_unitario : DECIMAL(12,2)
+}
+
+entity AVALIACAO {
+  id : BIGINT PK
+  pedido_id : BIGINT FK UNIQUE
+  nota : INT 1..5
+  comentario : VARCHAR(500) NULL
+  data : DATETIME
+}
+
 CLIENTE ||--o{ PEDIDO_SERVICO : publica
 PROFISSIONAL o|--o{ PEDIDO_SERVICO : aceita
-SERVICO ||--o{ PEDIDO_SERVICO : categoria
-PEDIDO_SERVICO ||--|{ ITEM_SERVICO : contem
+PEDIDO_SERVICO ||--|{ ITEM_SERVICO : possui
 SERVICO ||--o{ ITEM_SERVICO : referencia
 PEDIDO_SERVICO ||--o| AVALIACAO : resulta
-PROFISSIONAL ||--o{ AVALIACAO : recebe
+
 @enduml
