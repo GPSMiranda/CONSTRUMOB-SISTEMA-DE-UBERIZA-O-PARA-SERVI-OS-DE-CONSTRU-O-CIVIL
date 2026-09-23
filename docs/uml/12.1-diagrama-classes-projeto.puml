@@ -1,0 +1,28 @@
+@startuml
+title Diagrama de Classes de Projeto — CONSTRUMOB
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+package "domain" {
+ class Cliente { -id: Long; -nome: String; -email: String; -telefone: String }
+ class Profissional { -id: Long; -nome: String; -especialidade: String; -validado: boolean; +validarCadastro(): void }
+ class Servico { -id: Long; -nome: String; -descricao: String; -precoBase: BigDecimal }
+ class PedidoServico { -id: Long; -descricao: String; -localidade: String; -status: StatusPedido; +aceitar(profissional): void; +finalizar(): void; +cancelar(): void }
+ class ItemServico { -id: Long; -quantidade: Integer; -precoUnitario: BigDecimal }
+ class Avaliacao { -id: Long; -nota: Integer; -comentario: String }
+ enum StatusPedido { ABERTO; ACEITO; FINALIZADO; CANCELADO }
+}
+package "application" { class ClienteService; class ProfissionalService; class ServicoService; class PedidoService; class AvaliacaoService }
+package "persistence" { interface ClienteRepository; interface ProfissionalRepository; interface ServicoRepository; interface PedidoServicoRepository; interface AvaliacaoRepository }
+Cliente "1" -- "0..*" PedidoServico : publica
+Profissional "0..1" -- "0..*" PedidoServico : aceita/executa
+Servico "1" -- "0..*" ItemServico
+PedidoServico "1" -- "1..*" ItemServico
+PedidoServico "1" -- "0..1" Avaliacao
+Profissional "1" -- "0..*" Avaliacao
+PedidoServico --> StatusPedido
+ClienteService ..> ClienteRepository
+ProfissionalService ..> ProfissionalRepository
+ServicoService ..> ServicoRepository
+PedidoService ..> PedidoServicoRepository
+AvaliacaoService ..> AvaliacaoRepository
+@enduml
