@@ -1,6 +1,9 @@
 @startuml
 title DER - CONSTRUMOB MVP
 
+hide circle
+skinparam linetype ortho
+
 entity CLIENTE {
   id : BIGINT PK
   nome : VARCHAR(120)
