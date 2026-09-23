@@ -1,0 +1,19 @@
+@startuml
+title Mapas de navegação - CONSTRUMOB MVP
+left to right direction
+start
+:Acesso;
+if (Perfil?) then (Cliente)
+  :Publicar demanda;
+  :Acompanhar demanda;
+  :Avaliar profissional;
+elseif (Profissional)
+  :Consultar demandas;
+  :Aceitar demanda;
+  :Finalizar serviço;
+else (Administrador)
+  :Painel administrativo;
+  :Moderar cadastro;
+endif
+stop
+@enduml
