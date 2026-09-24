@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#173f35">
+  <meta name="description" content="MVP visual do ConstruMOB — serviços de construção civil mais transparentes.">
+  <title>ConstruMOB — MVP Visual</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand"><span class="brand-mark">⌂</span><span>Constru<span>MOB</span></span></div>
+      <div class="workspace-label">ESPAÇO DE TRABALHO</div>
+      <nav class="main-nav" aria-label="Navegação principal">
+        <button class="nav-item active" data-view="inicio"><span>▦</span> Visão geral</button>
+        <button class="nav-item" data-view="demandas"><span>◈</span> Demandas</button>
+        <button class="nav-item" data-view="profissionais"><span>♙</span> Profissionais</button>
+        <button class="nav-item" data-view="servicos"><span>⌂</span> Catálogo de serviços</button>
+      </nav>
+      <div class="sidebar-footer"><div class="help-card"><strong>Precisa de ajuda?</strong><p>Consulte o fluxo de publicação e contratação.</p><button class="link-button" data-toast="Central de ajuda em breve">Acessar ajuda →</button></div><div class="profile"><div class="avatar">MC</div><div><strong>Marcelo Chaves</strong><small>Administrador</small></div><span>⋮</span></div></div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar"><button class="icon-button menu-toggle" id="menuToggle" aria-label="Abrir menu">☰</button><div class="breadcrumb">ConstruMOB <span>/</span> <strong id="pageTitle">Visão geral</strong></div><div class="top-actions"><button class="icon-button" data-toast="Você não tem novas notificações" aria-label="Notificações">♧</button><button class="outline-button" data-view="demandas">+ Publicar demanda</button></div></header>
+      <div id="viewRoot"></div>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+  <div class="modal-backdrop" id="modalBackdrop" hidden><section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><button class="modal-close" id="modalClose">×</button><div id="modalContent"></div></section></div>
+  <script src="app.js"></script>
+</body>
+</html>

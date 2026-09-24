@@ -64,6 +64,17 @@ construmob/
 
 ## Como executar
 
+### MVP visual independente
+
+O diretório `mvp/` contém uma interface responsiva para desktop e smartphone, derivada dos protótipos do projeto. Ela pode ser visualizada sem banco de dados:
+
+```bash
+cd mvp
+node server.js
+```
+
+Acesse `http://localhost:4173`. Em um smartphone na mesma rede Wi-Fi, use o IPv4 do computador no lugar de `localhost`. Consulte [`mvp/README.md`](mvp/README.md) para o procedimento de instalação como PWA e empacotamento Android.
+
 ### 1. Pré-requisitos
 
 - JDK 21
